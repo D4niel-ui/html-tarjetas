@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Tarjetas Bootstrap</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center mt-4">Repositorio de tarjetas</h1>
+        <div class="row" id="card-container">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.paramount.tech/uri/mgid:arc:imageassetref:shared.southpark.latam:5cfc7028-764b-427c-8e2f-469cfee9b824?quality=0.7&gen=ntrn" class="card-img-top" alt="Imagen 1">
+                    <div class="card-body">
+                        <input type="text" class="form-control title-input" value="Tarjeta 1">
+                        <input type="file" class="form-control mt-2 file-input">
+                        <input type="text" class="form-control mt-2" placeholder="Descripción de la imagen" value="Descripción de la tarjeta 1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.paramount.tech/uri/mgid:arc:imageassetref:shared.southpark.latam:5cfc7028-764b-427c-8e2f-469cfee9b824?quality=0.7&gen=ntrn" class="card-img-top" alt="Imagen 2">
+                    <div class="card-body">
+                        <input type="text" class="form-control title-input" value="Tarjeta 2">
+                        <input type="file" class="form-control mt-2 file-input">
+                        <input type="text" class="form-control mt-2" placeholder="Descripción de la imagen" value="Descripción de la tarjeta 2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.paramount.tech/uri/mgid:arc:imageassetref:shared.southpark.latam:5cfc7028-764b-427c-8e2f-469cfee9b824?quality=0.7&gen=ntrn" class="card-img-top" alt="Imagen 3">
+                    <div class="card-body">
+                        <input type="text" class="form-control title-input" value="Tarjeta 3">
+                        <input type="file" class="form-control mt-2 file-input">
+                        <input type="text" class="form-control mt-2" placeholder="Descripción de la imagen" value="Descripción de la tarjeta 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary mt-4" id="add-card">Agregar Tarjeta</button>
+    </div>
+
+    <script>
+        // Función para previsualizar la imagen seleccionada
+        function previewImage(input, imgElement) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    imgElement.src = e.target.result; // Actualiza el src de la imagen
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Añadir funcionalidad de previsualización y edición de título a todas las tarjetas existentes
+        document.querySelectorAll('.file-input').forEach(function(input) {
+            input.addEventListener('change', function() {
+                var imgElement = this.closest('.card').querySelector('.card-img-top');
+                previewImage(this, imgElement);
+            });
+        });
+
+        document.querySelectorAll('.title-input').forEach(function(input) {
+            input.addEventListener('input', function() {
+                var titleElement = this.closest('.card').querySelector('.card-title');
+                titleElement.textContent = this.value; // Actualiza el título de la tarjeta
+            });
+        });
+
+        // Añadir una nueva tarjeta
+        document.getElementById('add-card').addEventListener('click', function() {
+            const cardContainer = document.getElementById('card-container');
+            const newCard = document.createElement('div');
+            newCard.classList.add('col-md-4');
+            newCard.innerHTML = `
+                <div class="card">
+                    <img src="https://images.paramount.tech/uri/mgid:arc:imageassetref:shared.southpark.latam:5cfc7028-764b-427c-8e2f-469cfee9b824?quality=0.7&gen=ntrn" class="card-img-top" alt="Nueva Imagen">
+                    <div class="card-body">
+                        <input type="text" class="form-control title-input" value="Nueva Tarjeta">
+                        <input type="file" class="form-control mt-2 file-input">
+                        <input type="text" class="form-control mt-2" placeholder="Descripción de la imagen" value="Descripción de la nueva tarjeta">
+                    </div>
+                </div>
+            `;
+            cardContainer.appendChild(newCard);
+
+            // Añadir eventos de previsualización de imagen y edición de título a la nueva tarjeta
+            newCard.querySelector('.file-input').addEventListener('change', function() {
+                var imgElement = this.closest('.card').querySelector('.card-img-top');
+                previewImage(this, imgElement);
+            });
+
+            newCard.querySelector('.title-input').addEventListener('input', function() {
+                var titleElement = this.closest('.card').querySelector('.card-title');
+                titleElement.textContent = this.value; // Actualiza el título de la tarjeta
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
